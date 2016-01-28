@@ -1,0 +1,97 @@
+# following non-siemens (i.e. any) data instruction
+http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FUGUE/Guide#Processing_Steps
+
+# one phase (difference?) and two magnitude images (take first), not complex
+# same dim and pixdim dimensions, visually overlap
+
+# scale integer format to radians
+fslmaths orig_phase -mul 3.14159 -div 2048 phase_rad -odt float
+-> 2048 needs to be adjusted
+
+
+
+####
+
+#### help ####
+
+#prepare_field_map
+#http://fsl.fmrib.ox.ac.uk/fslcourse/lectures/practicals/reg/index.html#featreg
+#http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FUGUE/Guide#SIEMENS_data
+
+#fugue
+#http://fsl.fmrib.ox.ac.uk/fsl/fsl-4.1.9/fugue/index.html
+
+#epi_reg
+#http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FLIRT/UserGuide
+
+
+#### sequence information ####
+
+# scan 3 two different magnitude images
+# scan 4 phase difference image 
+# scan 7 resting state
+# scan 15 mp2rage UNI
+
+# field map
+#TR 680 ms
+#TE 1 5.19 ms
+#TE 2 7.65 ms
+#-> delta TE 2.46
+
+# rest
+#TR 1400 ms
+#TE 30 ms
+#Echo spacing 0.67
+#MultibandAcceleration factor 4
+
+
+
+#### epireg ####
+
+epi_reg \
+--epi=/scr/kalifornien1/data/lemon/niftis/$subject/7/mcflirt/007-cmrr_mbep2d_resting_mcf_mean_reg.nii.gz \
+--t1=/scr/kalifornien1/data/lemon/niftis/$subject/15/skullstripped.nii.gz \
+--t1brain=/scr/kalifornien1/data/lemon/niftis/$subject/15/skullstripped.nii.gz \
+--fmap=/scr/kalifornien1/data/lemon/niftis/$subject/4/grefieldmappings004a2001_unwrapped.nii.gz \
+--fmapmag=/scr/kalifornien1/data/lemon/niftis/$subject/3/grefieldmappings003a1001_1.nii.gz \
+--fmapmagbrain=/scr/kalifornien1/data/lemon/niftis/$subject/3/grefieldmappings003a1001_1_brain.nii.gz \
+--echospacing=0.00067 --pedir=y- \
+--out=/scr/kalifornien1/data/lemon/niftis/$subject/7/epi_reg/007-cmrr_mbep2d_resting_mcf_mean_reg_epi_reg.nii.gz
+
+
+
+#### 'skullstripping' in SPM ####
+mkdir /scr/kalifornien1/data/lemon/niftis/$subject/15/segment/
+
+# SPM new segementation in GUI for now - ultimately mipav
+# make mask from SPM segmentation (thrs trial and error)
+
+mri_binarize \
+--i $out_dir/$subject/15/segment/c1mp2ragep3602Bs015a1001.nii \
+--o $out_dir//$subject/15/segment/gm_mask.nii \
+--min 0.75
+
+mri_binarize \
+--i $out_dir/$subject/15/segment/c2mp2ragep3602Bs015a1001.nii \
+--o $out_dir/$subject/15/segment/wm_mask.nii \
+--min 0.1
+
+mri_binarize \
+--i $out_dir/$subject/15/segment/c3mp2ragep3602Bs015a1001.nii \
+--o $out_dir/$subject/15/segment/csf_mask.nii \
+--min 0.95
+
+fslmaths /scr/kalifornien1/data/lemon/niftis/$subject/15/segment/gm_mask.nii \
+-add $out_dir/$subject/15/segment/wm_mask.nii \
+-add $out_dir/$subject/15/segment/csf_mask.nii \
+$out_dir/$subject/15/segment//hole_mask.nii
+
+mri_binarize \
+--i $out_dir/$subject/15/segment/hole_mask.nii.gz \
+--o $out_dir/$subject/15/segment/full_mask.nii.gz \
+--dilate 2 --erode 2 --min 0.1
+
+# mask mp2rage UNI with this mask
+mri_mask  $out_dir/$subject/15/mp2ragep3602Bs015a1001.nii.gz \
+$out_dir/$subject/15/segment/full_mask.nii.gz \
+$out_dir/$subject/15/skullstripped.nii.gz

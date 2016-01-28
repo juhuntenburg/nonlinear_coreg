@@ -1,0 +1,4 @@
+
+test=test1
+
+de.mpg.cbs.jist.intensity.JistIntensityMp2rageMasking  --inQuantitative /scr/jessica2/Schaare/LEMON/raw/LEMON090/mp2rage/t1.nii.gz --inSecond /scr/jessica2/Schaare/LEMON/raw/LEMON090/mp2rage/inv2.nii.gz --inT1weighted /scr/jessica2/Schaare/LEMON/raw/LEMON090/mp2rage/uni.nii.gz --outMasked /tmp/mp2rage/test1/outMasked.nii --outMasked2 /tmp/mp2rage/test1/outMasked2.nii --outSignal2 /tmp/mp2rage/test1/outSignal2.nii

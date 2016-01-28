@@ -1,0 +1,80 @@
+Subject:
+Re: Fieldmaps with flirt BBR
+From:Mark Jenkinson <[log in to unmask]>
+Reply-To:FSL - FMRIB's Software Library <[log in to unmask]>
+Date:Sat, 1 Jun 2013 07:56:25 +0000
+Content-Type:
+
+Hi,
+
+I think this problem has been resolved, but here is some feedback in case anyone is following this thread:
+
+The pipeline below is generally OK, but is much more complicated than it needs to be.  Instead we recommend the following:
+
+ 1 - Run bet on your fieldmap magnitude image, and possibly erode the result to make sure that it is "tight" and there are definitely no voxels left outside of the brain (as these normally correspond to noisy voxels in the fieldmap phase, and extrapolating out from within the brain is fine for the fieldmap, so missing parts of the brain are to be preferred over leaving non-brain tissue behind in this specific case).
+
+ 2 - Run fsl_prepare_fieldmap (GUI or command-line) to create a fieldmap in units of rad/s 
+
+ 3 - Run epi_reg using your structural, a brain-extracted version of your structural (but this time do not erode as above, and a bit of non-brain tissue left is much better than excluding brain tissue in this case), plus the fieldmap images from above.
+
+Or, you can do step 3 via pre-stats in the FEAT GUI.
+
+All the best,
+	Mark
+
+
+On 10 Apr 2013, at 22:04, Jordan Poppenk <[log in to unmask]> wrote:
+
+> Dear FSL experts,
+> 
+> When using my fieldmaps with BBR, I find that they have no effect. I am having trouble diagnosing the problem, and wondered whether one of you might be able to offer some advice. I am basing my pipeline off of the contents of epi_reg.
+> 
+> I currently get an error that suggests there is a conversion problem (see step 3d below), which suggests to me that I have somehow gone wrong in preparing my images, rather than this being a problem with BBR.
+> 
+> Consistent with this interpretation, things also go awry when I attempt to create a warp image. I have described my pipeline below along with brief descriptions of the associated images at each step.
+> 
+> Any help would be much appreciated!
+> 
+> Cheers,
+> Jordan
+> 
+> 
+> 
+> 1. I am starting with a fieldmap image that looks good visually (mostly grey in the brain area with a white patch in vmPFC), and where voxels have the range -1277 to +1277. 
+> 
+> 2. I apply fugue to create an unmasked image that also looks good with the same intensity range:
+> fugue --loadfmap=fmap --mask=fmap_mask --unmaskfmap --savefmap=fmap_unmasked --unwarpdir=y-
+> 
+> 
+> ** BBR application ***
+> 
+> 3a. I use applywarp to transform this image to the subject's T1 anatomical (using a transform derived elsewhere). This still look sgood.
+> 
+> 3b. I use fslmaths to obtain an inner mask
+> 
+> 3c. I use fugue to create a dilated version of the file that still looks good. I end up with a range -1277 to +1277:
+> fugue --loadfmap=fmap_anatomical --mask=innermask --unmaskfmap --unwarpdir=y- --savefmap=fmap_dilated
+> 
+> 3d. Using flirt and BBR, I complete registration with no fieldmap:
+> flirt -ref T1_anat -in epi -dof 6  -cost bbr -wmseg anat_wm -init prelim_xfm -omat func2anat.mat -out test_output_nofmap -schedule ${FSLDIR}/etc/flirtsch/bbr.sch
+> 
+> 3e. ...and then with fieldmap:
+> flirt -ref T1_anat -in epi -dof 6  -cost bbr -wmseg anat_wm -init prelim_xfm -omat func2anat.mat -out test_output_fmap -schedule ${FSLDIR}/etc/flirtsch/bbr.sch -echospacing 0.00039 -pedir y- -fieldmap fmap_dilated
+> ** this produces the text,
+> "Warning: Out of range or non-integer values truncated during conversion to character"
+> 
+> 3f. I compare the images and see no difference anywhere in the brain when toggling between test_output_fmap and test_output_nofmap
+> 
+> 
+> ** Unwarp application **
+> 4a. I use applywarp to align my fieldmap with my epis (still in the range -1277 +1277)
+> 
+> 4b. I make a mask with fslmaths
+> 
+> 4c. I use fugue to create a "shift" image with range of about -6 to +6 (still looks like a fieldmap):
+> fugue --loadfmap=fmap_coreg --mask=epi_mask --saveshift=fmap_shifted --unmaskshift --dwell=0.00039 --unwarpdir y-
+> 
+> 4d. I use convertwarp to create a dewarp image, but this yields nothing but a big gradient from R to L (intensity range 0 to 2), (which is especially weird given that I have been specifying A>P all along):
+> convertwarp -r epi -s fmap_shifted -o warp_img --shiftdir=y- --absout
+> 
+> 4e. I use applywarp to apply the warp image to an epi and get the error, "an error occurred while reading file: fmap_shifted

@@ -1,0 +1,37 @@
+#!/bin/bash
+
+
+subject='LEMON001'
+anat_dir= 
+epi_dir='/scr/ilz1/nonlinear_registration/lemon/results/'
+
+anat_head=$anat_dir/$subject/??
+epi_mean=$epi_dir/$subject/moco/$subject/epi_mean.nii.gz
+pedir = y-
+
+## fieldmap
+fmap_shiftmap=$epi_dir/$subject/fmap/$subject/fmap_shiftmap.nii.gz
+fmap_epi2anat=$epi_dir/$subject/fmap/$subject/fmap_epi2anat.mat
+fmap_warp=$epi_dir/$subject/fmap/$subject/fmap_warp
+epi_mean_fmapcorr=$epi_dir/$subject/fmap/$subject/epi_mean_fmapcorr
+
+convertwarp -r $anat_head --shiftdir=$pedir --relout \
+-s $fmap_shiftmap --postmat=fmap_epi2anat \
+-o $fmap_warp
+
+applywarp -i $epi_mean -r $anat_head -o $epi_mean_fmapcorr -w $fmap_warp --interp=spline --rel
+
+
+## topup
+topup_epi2se=$epi_dir/$subject/topup/$subject/topup_epi2se.mat
+topup_shiftmap=$epi_dir/$subject/topup/$subject/topup_shiftmap.nii.gz
+topup_epi2anat=$epi_dir/$subject/topup/$subject/topup_epi2anat.mat
+topup_warp=$epi_dir/$subject/topup/$subject/topup_warp
+epi_mean_topupcorr=$epi_dir/$subject/topup/$subject/epi_mean_topupcorr
+
+convertwarp -r $anat_head --shiftdir=$pedir --relout \
+--premat=topup_epi2se -s $topup_shiftmap --postmat=topup_epi2anat \
+-o $topup_warp
+
+applywarp -i $epi_mean -r $anat_head -o $epi_mean_topupcorr -w $topup_warp --interp=spline --rel
+

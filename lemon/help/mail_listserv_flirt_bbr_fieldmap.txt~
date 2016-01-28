@@ -1,0 +1,32 @@
+Subject:Re: new Flirt features
+From:Mark Jenkinson <[log in to unmask]>
+Reply-To:FSL - FMRIB's Software Library <[log in to unmask]>
+Date:Thu, 13 Sep 2012 09:20:31 -0500
+	
+
+Hi,
+
+This is our own implementation and incorporates fieldmap unwarping during the registration process (so different from what is described in Greve et al).  We do not alter the "amount" of unwarping (i.e. the amplitude is fixed by the epi echo spacing and other sequence-derived parameters) and so we are not doing what some people may call a non-linear registration.  We do adjust the direction of the applied unwarping (since the angulation of the EPI to the structural changes during registration does change, and we start with the fieldmap aligned to the structural image) and apply it, so it is non-linear in that sense.  We do output a deformation field called *_warp in FEAT or epi_reg.
+
+Currently the epi_reg script (and flirt) can take in a weighting image, aligned to the structural.  So sigloss can be used to create this, although we have not yet finished testing the benefit of this, but feel free to try it yourself.  Anecdotally, I have not seen a consistent improvement using it, and some failures, so I'm slightly wary of the current version's ability to work well with this, but that observation is not based on a large amount of testing.
+
+All the best,
+	Mark
+
+
+On 13 Sep 2012, at 08:52, Basile Pinsard <[log in to unmask]> wrote:
+
+> Dear FSL masters.
+> 
+> I am really excited about the new flirt BBR cost function and the included fieldmap, but these raise a few questions:
+> in the original paper B0 distortion is said to be possibly handled by deweighting sensitive area from a template/atlas.
+> I was wondering how is the fieldmap used in fsl5 Flirt:
+> Is it used to compute distortion in the EPI implying non-linear optimisation? If so why is not to output the deformation field?
+> If not, is that only used to deweight regions using weight similar to these in sigloss?
+> If not is there any interest in using sigloss output as refweight in epi_reg or even in flirt alone?
+> 
+> Thanks for that great release!
+> Cheers.
+> 
+> basile
+> 

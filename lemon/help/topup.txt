@@ -1,0 +1,21 @@
+
+# estimate the field: topup
+--imain= all the images used for estimation in a 4d file (for us: pos and neg blips before and after rest run)
+###fslroi, fslmerge
+--datain= textfile describing the 4d file, 3 rows phase encoding, 4th row total readout time (defined as the time from the centre of the first echo to the centre of the last) in seconds (87*0.00067? -> EPI Faktor 88, Dwell Time 0.67 ms, see FAQ)
+--config= ascii-file with one row for each parameter to specify for topup, and where comments (ignored by topup) are preceeded by a #, starting point: b02b0.cnf (check subsampling)
+--out
+--fout= output field (spline coefficients convoled with spline kernel)
+--iout= unwarped and movement corrected images (only the input ones), uses traditional interpolation and Jacobian modulation
+movpar.txt -> describes movement relative to first volume (translation, rotation)
+fieldcoeff.nii -> spline coefficients encoding the field, smaller and continuous
+
+#warpres:  specify a knot-spacing smaller than two voxels in the direction with the smallest voxel size
+#scale: the input images should have similar intensities
+
+# Note that b02b0.cnf uses sub-sampling to speed up the estimation and that topup requires that the image-size is a multiple of the sub-sampling level. So, for example if you want to use sub-sampling by a factor of 2 the image-size should be a multiple of 2 in all directions (e.g. 96x96x48))
+
+# unwarping: applytopup
+
+
+correcting for distortions and movement between the b0

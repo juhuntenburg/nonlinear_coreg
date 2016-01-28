@@ -1,0 +1,313 @@
+huntenburg@ilz> cli-run-module edu.jhu.ece.iacl.plugins.segmentation.skull_strip.MedicAlgorithmSPECTRE2010  --inInput /tmp/mp2rage/background/outMasked.nii -xDefaultMem 6000 --outMask /tmp/mp2rage/strip/outMask.nii --outStripped /tmp/mp2rage/strip/outStripped.nii
+cli	####################################################################
+cli	Initializing MIPAV/JIST Framework
+cli	####################################################################
+cli	Interpretting command line arguments
+cli	####################################################################
+edu.jhu.ece.iacl.plugins.segmentation.skull_strip.MedicAlgorithmSPECTRE2010
+	outExecution = <default> = 
+	inDegrees = <default> = Affine - 12
+	inMMC2 = <default> = 2
+	inRegistration = <default> = Trilinear
+	inOutput5 = <default> = Trilinear
+	outSplitHalves = <default> = Split-Halves Volume
+	inNumber2 = <default> = 3
+	inOutput3 = <default> = true
+	inOutput4 = <default> = true
+	inMultithreading = <default> = false
+	inOutput2 = <default> = true
+	inBackground = <default> = 0.001
+	outMidsagittal = <default> = Midsagittal Plane
+	outOriginal = <default> = Original or Reoriented Volume
+	inOutput = <default> = false
+	outPrior = <default> = Prior Volume
+	outStripped = /tmp/mp2rage/strip/outStripped.nii = /tmp/mp2rage/strip/outStripped.nii
+	inMMC = <default> = 2
+	inMinimum2 = <default> = -30
+	outd0 = <default> = d0
+	outFANTASM = <default> = FANTASM Segmentation
+	inImage = <default> = T1_MPRAGE
+	inApply = <default> = All
+	inRun = <default> = true
+	inInitial = <default> = 5
+	inSkip = <default> = false
+	inInhomogeneity = <default> = false
+	inInput = /tmp/mp2rage/background/outMasked.nii = /tmp/mp2rage/background/outMasked.nii
+	inFine = <default> = 6
+	inNumber = <default> = 2
+	inFind = <default> = true
+	inMaximum = <default> = 30
+	inSubsample = <default> = true
+	inResample = <default> = false
+	inAtlas = <default> = /afs/cbs.mpg.de/software/cbstools/3.0/jist-cruise/Atlas/spectre/oasis-3.txt
+	outMask = /tmp/mp2rage/strip/outMask.nii = /tmp/mp2rage/strip/outMask.nii
+	inCost = <default> = Correlation ratio
+	inCoarse = <default> = 15
+	inInitial2 = <default> = 0.35
+	inSmoothing = <default> = 0.02
+	outSegmentation = <default> = Segmentation on Midsagittal Plane
+	inMinimum = <default> = 0.1
+	inMultiple = <default> = 10
+	inUse = <default> = true
+	outProc = /tmp/mp2rage/strip
+	outResult = output.txt
+cli	####################################################################
+null
+file: /afs/cbs.mpg.de/software/cbstools/3.0/jist-cruise/Atlas/spectre/OAS1_0001_MR1_original.img
+file: /afs/cbs.mpg.de/software/cbstools/3.0/jist-cruise/Atlas/spectre/OAS1_0001_MR1_ew_mask.xml
+file: /afs/cbs.mpg.de/software/cbstools/3.0/jist-cruise/Atlas/spectre/OAS1_0002_MR1_original.img
+file: /afs/cbs.mpg.de/software/cbstools/3.0/jist-cruise/Atlas/spectre/OAS1_0002_MR1_ew_mask.xml
+file: /afs/cbs.mpg.de/software/cbstools/3.0/jist-cruise/Atlas/spectre/OAS1_0003_MR1_original.img
+file: /afs/cbs.mpg.de/software/cbstools/3.0/jist-cruise/Atlas/spectre/OAS1_0003_MR1_ew_mask.xml
+Loading Atlas 1:OAS1_0001_MR1_original
+Success!
+Loading Atlas 1:OAS1_0002_MR1_original
+Success!
+Loading Atlas 1:OAS1_0003_MR1_original
+Success!
+TransMatrix: 
+	transform id: Another Dataset
+  0.0000  0.0000  -1.0000  175.0000  
+  1.0000  0.0000  0.0000  0.0000  
+  -0.0000  1.0000  -0.0000  0.0000  
+  0.0000  0.0000  0.0000  1.0000  
+
+outMasked1_clone: Transforming image ...
+
+
+SKIPPING ISOTROPIC RESAMPLE
+
+
+
+ALIGNING ATLASES
+
+---------- Performance Summary ----------
+1) Compare Volumes -- ELAPSED TIME: Actual:  -  / CPU:  - 
+
+TOTAL ELAPSED TIME: Actual:  -  / CPU:  - 
+CURRENT MEMORY: Used 140 MB, Free 374 MB, Total 514 MB
+Registering images: Beginning registration
+Measuring at fine samples
+Optimizing top samples
+Optimizing minima
+Perturbing minima
+Measuring costs of minima
+Optimizing with 7 DOF
+Optimizing with 9 DOF
+Optimizing with 12 DOF
+Starting last optimization
+---------- Performance Summary ----------
+1) Beginning registration -- ELAPSED TIME: Actual:  1 min 17.14 sec / CPU:  1 min 16.74 sec
+
+TOTAL ELAPSED TIME: Actual:  1 min 17.14 sec / CPU:  1 min 16.74 sec
+CURRENT MEMORY: Used 199 MB, Free 346 MB, Total 545 MB
+Flirt Method   0.9013  0.0243  -0.0128  7.0081  
+  0.0000  0.9336  0.1670  32.6435  
+  0.0107  -0.1444  0.8609  112.4267  
+  -0.0000  0.0000  0.0000  1.0000  
+ (1.0,1.0,1.0) (176,240,256)
+OAS1_0001_MR1_original_clone: Transforming image ...
+edu.jhu.ece.iacl.jist.pipeline.CalculationMonitorCalculation monitor shutting down by interrupt.
+---------- Performance Summary ----------
+1) Algorithm Calculation -- ELAPSED TIME: Actual:  1 min 17.68 sec / CPU:  1 min 17.01 sec
+
+TOTAL ELAPSED TIME: Actual:  1 min 17.68 sec / CPU:  1 min 17.01 sec
+CURRENT MEMORY: Used 164 MB, Free 378 MB, Total 543 MB
+jist.plugins	Transform Volume Method   0.9013  0.0243  -0.0128  7.0081  
+  0.0000  0.9336  0.1670  32.6435  
+  0.0107  -0.1444  0.8609  112.4267  
+  -0.0000  0.0000  0.0000  1.0000  
+ (1.0,1.0,1.0) (176,240,256)
+OAS1_0001_MR1_ew_mask_clone: Transforming image ...
+---------- Performance Summary ----------
+1) Compare Volumes -- ELAPSED TIME: Actual:  -  / CPU:  - 
+
+TOTAL ELAPSED TIME: Actual:  -  / CPU:  - 
+CURRENT MEMORY: Used 193 MB, Free 356 MB, Total 550 MB
+Registering images: Beginning registration
+Measuring at fine samples
+Optimizing top samples
+Optimizing minima
+Perturbing minima
+Measuring costs of minima
+Optimizing with 7 DOF
+Optimizing with 9 DOF
+Optimizing with 12 DOF
+Starting last optimization
+---------- Performance Summary ----------
+1) Beginning registration -- ELAPSED TIME: Actual:  1 min 17.86 sec / CPU:  1 min 17.22 sec
+
+TOTAL ELAPSED TIME: Actual:  1 min 17.86 sec / CPU:  1 min 17.22 sec
+CURRENT MEMORY: Used 229 MB, Free 408 MB, Total 638 MB
+Flirt Method   0.8975  0.0254  -0.0122  7.4284  
+  -0.0223  0.8941  0.1935  35.7158  
+  0.0167  -0.1652  0.8013  114.3197  
+  -0.0000  0.0000  0.0000  1.0000  
+ (1.0,1.0,1.0) (176,240,256)
+OAS1_0002_MR1_original_clone: Transforming image ...
+edu.jhu.ece.iacl.jist.pipeline.CalculationMonitorCalculation monitor shutting down by interrupt.
+---------- Performance Summary ----------
+1) Algorithm Calculation -- ELAPSED TIME: Actual:  1 min 18.65 sec / CPU:  1 min 17.47 sec
+
+TOTAL ELAPSED TIME: Actual:  1 min 18.65 sec / CPU:  1 min 17.47 sec
+CURRENT MEMORY: Used 173 MB, Free 455 MB, Total 628 MB
+jist.plugins	Transform Volume Method   0.8975  0.0254  -0.0122  7.4284  
+  -0.0223  0.8941  0.1935  35.7158  
+  0.0167  -0.1652  0.8013  114.3197  
+  -0.0000  0.0000  0.0000  1.0000  
+ (1.0,1.0,1.0) (176,240,256)
+OAS1_0002_MR1_ew_mask_clone: Transforming image ...
+---------- Performance Summary ----------
+1) Compare Volumes -- ELAPSED TIME: Actual:  -  / CPU:  - 
+
+TOTAL ELAPSED TIME: Actual:  -  / CPU:  - 
+CURRENT MEMORY: Used 205 MB, Free 427 MB, Total 633 MB
+Registering images: Beginning registration
+Measuring at fine samples
+Optimizing top samples
+Optimizing minima
+Perturbing minima
+Measuring costs of minima
+Optimizing with 7 DOF
+Optimizing with 9 DOF
+Optimizing with 12 DOF
+Starting last optimization
+---------- Performance Summary ----------
+1) Beginning registration -- ELAPSED TIME: Actual:  1 min 21.55 sec / CPU:  1 min 20.89 sec
+
+TOTAL ELAPSED TIME: Actual:  1 min 21.55 sec / CPU:  1 min 20.89 sec
+CURRENT MEMORY: Used 237 MB, Free 471 MB, Total 708 MB
+Flirt Method   0.9313  0.0075  -0.0258  7.1308  
+  -0.0023  0.9475  0.1614  29.6272  
+  0.0262  -0.1516  0.8588  111.4797  
+  -0.0000  0.0000  0.0000  1.0000  
+ (1.0,1.0,1.0) (176,240,256)
+OAS1_0003_MR1_original_clone: Transforming image ...
+edu.jhu.ece.iacl.jist.pipeline.CalculationMonitorCalculation monitor shutting down by interrupt.
+---------- Performance Summary ----------
+1) Algorithm Calculation -- ELAPSED TIME: Actual:  1 min 22.02 sec / CPU:  1 min 21.13 sec
+
+TOTAL ELAPSED TIME: Actual:  1 min 22.02 sec / CPU:  1 min 21.13 sec
+CURRENT MEMORY: Used 182 MB, Free 535 MB, Total 717 MB
+jist.plugins	Transform Volume Method   0.9313  0.0075  -0.0258  7.1308  
+  -0.0023  0.9475  0.1614  29.6272  
+  0.0262  -0.1516  0.8588  111.4797  
+  -0.0000  0.0000  0.0000  1.0000  
+ (1.0,1.0,1.0) (176,240,256)
+OAS1_0003_MR1_ew_mask_clone: Transforming image ...
+
+
+X range [22, 151]
+Y range [57, 225]
+Z range [92, 234]
+
+
+FANTASM BEGIN
+
+image: 
+outMasked1_clone_transform_clone
+outMasked1_clone_transform_clone: Processing image ...
+
+ -- FANTASM Segmentation --
+boundaries: [1,176] [1,240] [1,256]
+shrink images..
+new dimensions: 178x242x258
+FCM:initialisation
+centroids: (405.98682, 1234.9802, 2063.9736, 2892.967, 3721.9604)
+inner loop time: (milliseconds): 772
+iteration 1 (max: 0.0)
+iteration 1 (max: 0.0)
+centroids: (8.876465, 1246.4232, 2048.6387, 2881.4836, 3680.6943)
+inner loop time: (milliseconds): 5169
+iteration 2 (max: 0.4631098)
+iteration 2 (max: 0.4631098)
+centroids: (2.8226147, 1313.9896, 2044.4365, 2873.7166, 3667.9155)
+inner loop time: (milliseconds): 5420
+iteration 3 (max: 0.1260984)
+iteration 3 (max: 0.1260984)
+centroids: (2.9752002, 1348.2563, 2051.5215, 2867.5618, 3661.1892)
+inner loop time: (milliseconds): 5418
+iteration 4 (max: 0.06994367)
+iteration 4 (max: 0.06994367)
+centroids: (3.1010287, 1369.2961, 2060.6978, 2864.548, 3657.3604)
+inner loop time: (milliseconds): 5418
+iteration 5 (max: 0.050152123)
+iteration 5 (max: 0.050152123)
+centroids: (3.1881037, 1383.472, 2069.2932, 2864.2585, 3655.3933)
+inner loop time: (milliseconds): 5372
+ordering: (0, 1, 2, 3, 4, 5)
+total iterations: 5, total time: (milliseconds): 30764creating result images...
+final classification...
+
+
+########################################
+
+SPECTRE2009 1.5
+
+########################################
+
+ROWS 176 COLS 240 SLICES 256
+NMASK 3
+MODALITY T1_MPRAGE
+OUTPUT TYPE ALL
+FLOAT INIT PRIOR 0.35
+FLOAT MIN PRIOR 0.1
+INT INIT PRIOR 1
+INT MIN PRIOR 0
+EROSION 5
+MMC (2, 2)
+1.0 1.0 1.0
+CREATE IMAGE 5
+CREATE SEGMENTATION 5
+CREATE MASKS 
+BUILD PRIOR
+Prior Volume 1244165
+Initializing mask ... done
+Removing 18 Connected Holes ...  done
+26 Connected Erosion with radius 5
+ 3 3 3 
+done
+
+Get largest 6 Connected neighborhood ... done
+Fast Marching ... done
+Initializing heap ... done
+Heap Size ... 472276
+recursiveHillDescent:
+	Out of Bounds: 0
+	Already in the mask: 19008947
+	Not moving away from the mask: 429711
+	Type 1: 603922
+	Type 2: 154428
+Topologically consistent closing ... 
+3 3 3
+done
+Passing results to vols.
+SPECTRE2009 Exit.
+Exception in thread "main" java.lang.NoClassDefFoundError: javax/media/j3d/IndexedTriangleArray
+	at java.lang.ClassLoader.defineClass1(Native Method)
+	at java.lang.ClassLoader.defineClass(ClassLoader.java:643)
+	at java.security.SecureClassLoader.defineClass(SecureClassLoader.java:142)
+	at java.net.URLClassLoader.defineClass(URLClassLoader.java:277)
+	at java.net.URLClassLoader.access$000(URLClassLoader.java:73)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:212)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:205)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:323)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:294)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:268)
+	at edu.jhu.ece.iacl.plugins.segmentation.skull_strip.MedicAlgorithmSmoothBrainMask.<clinit>(MedicAlgorithmSmoothBrainMask.java:35)
+	at edu.jhu.ece.iacl.plugins.segmentation.skull_strip.MedicAlgorithmSPECTRE2010$SPECTREwrapper.execute(MedicAlgorithmSPECTRE2010.java:575)
+	at edu.jhu.ece.iacl.plugins.segmentation.skull_strip.MedicAlgorithmSPECTRE2010.execute(MedicAlgorithmSPECTRE2010.java:354)
+	at edu.jhu.ece.iacl.jist.pipeline.ProcessingAlgorithm.runAlgorithm(ProcessingAlgorithm.java:337)
+	at edu.jhu.ece.iacl.jist.pipeline.ProcessingAlgorithm.runAlgorithm(ProcessingAlgorithm.java:321)
+	at edu.jhu.ece.iacl.jist.cli.run.main(run.java:103)
+Caused by: java.lang.ClassNotFoundException: javax.media.j3d.IndexedTriangleArray
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:217)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:205)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:323)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:294)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:268)
+	... 17 more
+
+

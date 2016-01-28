@@ -1,0 +1,117 @@
+*** version_1 ***
+master, original, github
+
+
+*** version_2 ***
+changing to bspline
+parameters as described in original paper
+
+transforms = ['BSplineSyN']
+transform_parameters = [(0.1,26,0,3)]
+number_of_iterations = [[100,70,50,20]]
+shrink_factors = [[6,4,2,1]]
+smoothing_sigmas = [[3,2,1,0]]
+
+
+*** version_3 ***
+fmap mask
+no masking of epi nor anat before ants
+register fmap mask to both images and use within ants
+
+comment out all masking
+reset inputs from masked epi to tmean out and mask anat to mriconvert out 
+(anat_min_max, epi_min_max, mulinv, antsreg fixed)
+
+additional inputs to inputnode
+'norm_lin', 'norm_warp', 'fmap_mask'
+
+additional nodes for warping the fieldmap mask into anat and epi space
+(makelist/transformlist, warpmask_anat, addlist/transformlist2, warpmask_epi)
+
+additional inputs to antsreg
+(warpmask_anat, 'output_image', antsreg, 'moving_image_mask')
+(warpmask_epi, 'output_image', antsreg, 'fixed_image_mask')
+
+
+*** version_4 ***
+dilate fmap mask by 2 before transforming (change input to warpmask_anat/_epi)
+apply fmap mask warped into respective space (anat, epi) BEFORE inverting
+(change input to anat/epi_min_max, mulinv, antsreg)
+remove mask inputs to antsreg
+
+
+*** version_5 ***
+starting from version 1 (actually started form 2 but then changed back to syn)
+mask with aparc+aseg instead of ribbon 
+- dilate 10 erode 7
+
+back to syn:
+transforms = ['SyN'],
+transform_parameters = [(0.10,3,0)],
+number_of_iterations = [[10,5]],
+shrink_factors = [[2,1]],
+smoothing_sigmas = [[1,0.5]],
+
+
+*** version_6 ***
+starting from version 4 (fmap masking, improved fmap mask) 
+but back to syn (like in 5)
+
+*** version_7 ***
+fmap mask syn more iterations
+number_of_iterations = [[100,70,50]],
+shrink_factors = [[4,2,1]],
+smoothing_sigmas = [[3,2,1]],
+
+
+*** version_8 *** 
+starting from version 5 
+increasing iterations to:
+number_of_iterations = [[100,70,50,20]]
+shrink_factors = [[6,4,2,1]]
+smoothing_sigmas = [[3,2,1,0]]
+
+
+*** version_9 ***
+starting from version 5
+restricting completely to PE
+
+*** version_10 ***
+like 9, strict PE but for many iterations (starting from version 8)
+
+*** version_11 ***
+starting from v5 (syn wholebrain few moderate)
+switching to bspline, but with few iterations
+
+transforms = ['BSplineSyN']
+transform_parameters = [(0.1,26,0,3)]
+
+
+*** version_12 ***
+like 11 but with many iterations (similar to 2 but here with whole brain mask)
+number_of_iterations = [[100,70,50,20]]
+shrink_factors = [[6,4,2,1]]
+smoothing_sigmas = [[3,2,1,0]]
+
+
+*** version_13 ***
+like 6 but strict
+
+*** version_14 ***
+like 7 but strict
+
+*** version_15 ***
+like 4 (fmap bspline moderate) but few iterations
+
+*** version_16 ***
+like 11 (whole bspline few) but strict
+
+*** version 17 ***
+like 12 (whole bspline many) but strict
+
+*** version 18 ***
+like 15 (fmap bspline few) but strict
+
+
+
+
